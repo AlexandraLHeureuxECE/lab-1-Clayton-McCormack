@@ -108,6 +108,8 @@ function paint() {
 
     // styling helpers
     cellEl.classList.toggle("filled", value !== null);
+    cellEl.classList.toggle("x", value === "X");
+    cellEl.classList.toggle("o", value === "O");
 
     // disable interaction if filled or game over
     const disabled = state.gameOver || value !== null;

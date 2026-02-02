@@ -1,14 +1,32 @@
 :root {
-  --bg: #0b0b10;
-  --panel: #141421;
-  --text: #e9e9f2;
-  --muted: #b6b6c8;
-  --cell: #1b1b2b;
-  --cellHover: #232338;
-  --border: #2f2f49;
+  /* Page */
+  --bg0: #070812;
+  --bg1: #0b1026;
+
+  /* Surfaces */
+  --panel: #0f1736;
+  --tile: #111b40;
+  --tileHover: #152252;
+
+  /* Borders */
+  --border: #2f3f7a;
+  --borderStrong: #4458a8;
+
+  /* Text */
+  --text: #f4f6ff;
+  --muted: #c7cbea;
+
+  /* Accents */
   --accent: #7c5cff;
+
+  /* Player colors */
+  --x: #35e6ff;
+  --o: #ffd05a;
+
+  /* Win highlight */
   --win: #39d98a;
 }
+
 
 * {
   box-sizing: border-box;
@@ -20,9 +38,13 @@ body {
   display: grid;
   place-items: center;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: radial-gradient(1200px 600px at 50% 10%, #17172a 0%, var(--bg) 60%);
   color: var(--text);
+  background:
+    radial-gradient(900px 500px at 50% 0%, #1a1c4d 0%, transparent 60%),
+    radial-gradient(900px 500px at 20% 30%, #0f2a5f 0%, transparent 55%),
+    linear-gradient(180deg, var(--bg1) 0%, var(--bg0) 100%);
 }
+
 
 .app {
   width: min(520px, 92vw);
@@ -36,16 +58,14 @@ body {
 }
 
 .panel {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
   background: color-mix(in oklab, var(--panel) 92%, transparent);
-  border: 1px solid var(--border);
+  border: 1px solid var(--borderStrong);
   border-radius: 14px;
   padding: 12px 14px;
   margin-bottom: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
+
 
 .status {
   margin: 0;
@@ -78,19 +98,24 @@ body {
   height: min(140px, 26vw);
   border-radius: 16px;
   border: 1px solid var(--border);
-  background: var(--cell);
+  background: linear-gradient(180deg, #142052 0%, var(--tile) 100%);
   display: grid;
   place-items: center;
+
+  /* stronger, clearer glyphs */
   font-size: clamp(44px, 10vw, 76px);
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: 1px;
+  color: var(--text);
+
   cursor: pointer;
-  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35);
 }
 
 .cell:hover {
-  background: var(--cellHover);
-  border-color: color-mix(in oklab, var(--accent) 55%, var(--border));
+  background: linear-gradient(180deg, #1a2a67 0%, var(--tileHover) 100%);
+  border-color: var(--borderStrong);
   transform: translateY(-1px);
 }
 
@@ -103,17 +128,35 @@ body {
   opacity: 0.8;
 }
 
+.cell.x {
+  color: var(--x);
+  text-shadow: 0 0 18px color-mix(in oklab, var(--x) 40%, transparent);
+}
+
+.cell.o {
+  color: var(--o);
+  text-shadow: 0 0 18px color-mix(in oklab, var(--o) 35%, transparent);
+}
+
+
+.cell.filled {
+  border-color: color-mix(in oklab, var(--borderStrong) 75%, #000);
+  background: linear-gradient(180deg, #101a3e 0%, #0d1532 100%);
+}
+
 .cell.filled:hover {
-  background: var(--cell);
-  border-color: var(--border);
   transform: none;
+  border-color: color-mix(in oklab, var(--borderStrong) 75%, #000);
+  background: linear-gradient(180deg, #101a3e 0%, #0d1532 100%);
 }
 
 .cell.win {
-  border-color: color-mix(in oklab, var(--win) 70%, var(--border));
-  box-shadow: 0 0 0 2px color-mix(in oklab, var(--win) 35%, transparent);
-  animation: pop 180ms ease-out;
+  border-color: var(--win);
+  box-shadow:
+    0 0 0 2px color-mix(in oklab, var(--win) 45%, transparent),
+    0 14px 32px rgba(0,0,0,0.35);
 }
+
 
 @keyframes pop {
   from {
